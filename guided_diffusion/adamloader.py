@@ -30,19 +30,16 @@ class ADAMDataset3D(torch.utils.data.Dataset):
         self.seqtypes_set = set(self.seqtypes)
         self.database = []
         for dir in os.listdir(self.directory):
-            try:
-                tof_orig_path = os.path.join(self.directory, dir, f"{dir}_TOF-orig.nii.gz")
-            except:
+            tof_orig_path = os.path.join(self.directory, dir, f"{dir}_TOF-orig.nii.gz")
+            if not os.path.exists(tof_orig_path):
                 tof_orig_path = os.path.join(self.directory, dir, f"{dir}_TOF-orig.nii") # To handle kaggle dataset
 
-            try:
-                tof_pre_path = os.path.join(self.directory, dir, f"{dir}_TOF-pre.nii.gz")
-            except:
+            tof_pre_path = os.path.join(self.directory, dir, f"{dir}_TOF-pre.nii.gz")
+            if not os.path.exists(tof_pre_path)
                 tof_pre_path = os.path.join(self.directory, dir, f"{dir}_TOF-pre.nii") # To handle kaggle dataset
 
-            try:
-                seg_path = os.path.join(self.directory, dir, f"{dir}_aneurysms.nii.gz")
-            except:
+            seg_path = os.path.join(self.directory, dir, f"{dir}_aneurysms.nii.gz")
+            if not os.path.exists(seg_path)
                 seg_path = os.path.join(self.directory, dir, f"{dir}_aneurysms.nii") # To handle kaggle dataset
 
             datapoint = {
