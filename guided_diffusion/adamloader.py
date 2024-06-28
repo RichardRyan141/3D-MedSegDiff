@@ -35,11 +35,11 @@ class ADAMDataset3D(torch.utils.data.Dataset):
                 tof_orig_path = os.path.join(self.directory, dir, f"{dir}_TOF-orig.nii") # To handle kaggle dataset
 
             tof_pre_path = os.path.join(self.directory, dir, f"{dir}_TOF-pre.nii.gz")
-            if not os.path.exists(tof_pre_path)
+            if not os.path.exists(tof_pre_path):
                 tof_pre_path = os.path.join(self.directory, dir, f"{dir}_TOF-pre.nii") # To handle kaggle dataset
 
             seg_path = os.path.join(self.directory, dir, f"{dir}_aneurysms.nii.gz")
-            if not os.path.exists(seg_path)
+            if not os.path.exists(seg_path):
                 seg_path = os.path.join(self.directory, dir, f"{dir}_aneurysms.nii") # To handle kaggle dataset
 
             datapoint = {
