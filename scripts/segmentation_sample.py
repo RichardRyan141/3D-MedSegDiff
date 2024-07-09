@@ -17,6 +17,7 @@ import torch.distributed as dist
 from guided_diffusion import dist_util, logger
 from guided_diffusion.bratsloader import BRATSDataset, BRATSDataset3D
 from guided_diffusion.isicloader import ISICDataset
+from guided_diffusion.adamloader import ADAMDataset3D
 import torchvision.utils as vutils
 from guided_diffusion.utils import staple
 from guided_diffusion.script_util import (
@@ -58,6 +59,12 @@ def main():
 
         ds = BRATSDataset3D(args.data_dir,transform_test)
         args.in_ch = 5
+    elif args.data_name == 'ADAM':
+        tran_list = [transforms.Resize((args.image_size,args.image_size)),]
+        transform_test = transforms.Compose(tran_list)
+
+        ds = ADAMDataset3D(args.data_dir,transform_test)
+        args.in_ch = 5
     datal = th.utils.data.DataLoader(
         ds,
         batch_size=args.batch_size,
@@ -95,7 +102,7 @@ def main():
         img = th.cat((b, c), dim=1)     #add a noise channel$
         if args.data_name == 'ISIC':
             slice_ID=path[0].split("_")[-1].split('.')[0]
-        elif args.data_name == 'BRATS':
+        elif args.data_name == 'BRATS' or args.data_name == 'ADAM':
             # slice_ID=path[0].split("_")[2] + "_" + path[0].split("_")[4]
             slice_ID=path[0].split("_")[-3] + "_" + path[0].split("slice")[-1].split('.nii')[0]
 
