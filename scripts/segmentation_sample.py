@@ -96,7 +96,7 @@ def main():
     if args.use_fp16:
         model.convert_to_fp16()
     model.eval()
-    for _ in range(len(data)):
+    for xx in range(len(data)):
         b, m, path = next(data)  #should return an image from the dataloader "data"
         c = th.randn_like(b[:, :1, ...])
         img = th.cat((b, c), dim=1)     #add a noise channel$
@@ -106,7 +106,7 @@ def main():
             # slice_ID=path[0].split("_")[2] + "_" + path[0].split("_")[4]
             slice_ID=path[0].split("_")[-3] + "_" + path[0].split("slice")[-1].split('.nii')[0]
 
-        logger.log("sampling...")
+        logger.log(f"sampling {xx} out of {len(data)}...")
 
         start = th.cuda.Event(enable_timing=True)
         end = th.cuda.Event(enable_timing=True)
@@ -128,7 +128,7 @@ def main():
 
             end.record()
             th.cuda.synchronize()
-            print('time for 1 sample', start.elapsed_time(end))  #time measurement for the generation of 1 sample
+            print('time for', i, 'th sample', start.elapsed_time(end))  #time measurement for the generation of 1 sample
 
             co = th.tensor(cal_out)
             if args.version == 'new':
