@@ -64,7 +64,7 @@ def main():
         transform_test = transforms.Compose(tran_list)
 
         ds = ADAMDataset3D(args.data_dir,transform_test)
-        args.in_ch = 5
+        args.in_ch = 3
     datal = th.utils.data.DataLoader(
         ds,
         batch_size=args.batch_size,
